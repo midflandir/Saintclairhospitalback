@@ -8,7 +8,7 @@ import sofka.saintclairhospitalback.service.ServiceMedicalSpecialty;
 import java.util.List;
 
 @RestController
-@RequestMapping("api_hospital/")
+@RequestMapping("api/v1/hospital/")
 @CrossOrigin("*")
 public class ControllerMedicalSpecialty {
 
@@ -20,6 +20,10 @@ public class ControllerMedicalSpecialty {
         return serviceMedicalSpecialty.findAllMedicalSpecialty();
     }
 
+    @PostMapping("registerspecialty")
+    public DTOMedicalSpecialty registerspecialty(@RequestBody DTOMedicalSpecialty medicalspecialty){
+        return serviceMedicalSpecialty.saveSpecialtyRegister(medicalspecialty);
+    }
 
 
 }

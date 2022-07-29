@@ -1,5 +1,6 @@
 package sofka.saintclairhospitalback.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sofka.saintclairhospitalback.dto.DTOMedicalSpecialty;
 import sofka.saintclairhospitalback.dto.DTOPatient;
@@ -23,11 +24,59 @@ public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
 
     @Override
     public List<DTOMedicalSpecialty> findAllMedicalSpecialty() {
-        List<DTOMedicalSpecialty> EntitytoDTO;
+        List<DTOMedicalSpecialty> Entity_toDTO;
 
-        EntitytoDTO = convertMedicalEntitytoDTO(medicalspecialtyrepository.findAll());
+        Entity_toDTO = convertMedicalEntitytoDTO(medicalspecialtyrepository.findAll());
 
-        return EntitytoDTO;
+        return Entity_toDTO;
+    }
+
+
+    public DTOMedicalSpecialty saveSpecialtyRegister(DTOMedicalSpecialty specialty) {
+
+       return convertMedicalEntitytoDTOsingle(medicalspecialtyrepository.save(convertDTOtoEntity(specialty)));
+
+    }
+
+
+    public MedicalSpecialty convertDTOtoEntity(DTOMedicalSpecialty specialty){
+
+        MedicalSpecialty auxdtospeciualty = new MedicalSpecialty();
+        auxdtospeciualty.setId(specialty.getId());
+        auxdtospeciualty.setPhysicianInCharge(specialty.getPhysicianInCharge());
+        auxdtospeciualty.setName(specialty.getName());
+        auxdtospeciualty.setPatients(convertDTOtoPatientEntity(specialty.getPatients()));
+
+        return auxdtospeciualty;
+    }
+
+    private DTOMedicalSpecialty convertMedicalEntitytoDTOsingle(MedicalSpecialty medicalspecialty){
+
+            DTOMedicalSpecialty auxdtospeciualty = new DTOMedicalSpecialty();
+            auxdtospeciualty.setId(medicalspecialty.getId());
+            auxdtospeciualty.setPhysicianInCharge(medicalspecialty.getPhysicianInCharge());
+            auxdtospeciualty.setName(medicalspecialty.getName());
+            auxdtospeciualty.setPatients(convertPatientEntitytoDTO(medicalspecialty.getPatients()));
+
+        return auxdtospeciualty;
+    }
+
+    private List<Patient> convertDTOtoPatientEntity(List<DTOPatient> DTOpatientlist){
+        List<Patient> patient_list = new ArrayList<>();
+        for (int i = 0; i< DTOpatientlist.size(); i++){
+
+            Patient aux_dto_patient = new Patient();
+
+            aux_dto_patient.setId(DTOpatientlist.get(i).getId());
+            aux_dto_patient.setName(DTOpatientlist.get(i).getName());
+            aux_dto_patient.setAge(DTOpatientlist.get(i).getAge());
+            aux_dto_patient.setIdentificationNumber(DTOpatientlist.get(i).getIdentificationNumber());
+            aux_dto_patient.setDate( String.join(", ", DTOpatientlist.get(i).getDate()));
+            aux_dto_patient.setNumberOfApointments(DTOpatientlist.get(i).getNumberOfApointments());
+            patient_list.add(aux_dto_patient);
+        }
+
+        return patient_list;
     }
 
     private List<DTOMedicalSpecialty> convertMedicalEntitytoDTO(List<MedicalSpecialty> medicalspecialtylist){

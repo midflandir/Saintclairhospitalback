@@ -7,7 +7,6 @@ import java.util.List;
 @Data
 public class DTOPatient {
     private Integer id;
-
     private String name;
     private Integer age;
     private Long identificationNumber;

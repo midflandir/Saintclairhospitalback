@@ -1,4 +1,11 @@
 package sofka.saintclairhospitalback.service;
 
-public class ServicePatient {
+import org.springframework.stereotype.Service;
+import sofka.saintclairhospitalback.model.Patient;
+
+@Service
+public class ServicePatient implements IServicePatient{
+
+    private Patient patient;
+
 }

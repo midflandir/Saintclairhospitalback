@@ -25,5 +25,9 @@ public class ControllerMedicalSpecialty {
         return serviceMedicalSpecialty.saveSpecialtyRegister(medicalspecialty);
     }
 
+    @DeleteMapping("deletespecialty/{id}")
+    public void deletespecialty(@PathVariable Integer id){
+         serviceMedicalSpecialty.deleteSpecialty(id);
+    }
 
 }

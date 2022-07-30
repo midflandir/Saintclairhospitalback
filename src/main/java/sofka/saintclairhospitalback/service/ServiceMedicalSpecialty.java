@@ -1,6 +1,5 @@
 package sofka.saintclairhospitalback.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sofka.saintclairhospitalback.dto.DTOMedicalSpecialty;
 import sofka.saintclairhospitalback.dto.DTOPatient;
@@ -29,6 +28,11 @@ public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
         Entity_toDTO = convertMedicalEntitytoDTO(medicalspecialtyrepository.findAll());
 
         return Entity_toDTO;
+    }
+
+    @Override
+    public void deleteSpecialty(Integer id){
+        medicalspecialtyrepository.deleteById(id);
     }
 
 

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IServiceMedicalSpecialty {
     List<DTOMedicalSpecialty> findAllMedicalSpecialty();
+
+    void deleteSpecialty(Integer id);
 }

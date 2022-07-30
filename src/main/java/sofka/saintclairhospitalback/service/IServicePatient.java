@@ -6,4 +6,6 @@ import sofka.saintclairhospitalback.dto.DTOPatient;
 public interface IServicePatient {
 
     DTOPatient savePatientRegister(DTOMedicalSpecialty dtoMedicalSpecialty);
+
+    void deletePatient(Integer id);
 }

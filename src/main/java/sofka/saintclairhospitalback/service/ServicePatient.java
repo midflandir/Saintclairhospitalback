@@ -7,7 +7,6 @@ import sofka.saintclairhospitalback.model.MedicalSpecialty;
 import sofka.saintclairhospitalback.model.Patient;
 import sofka.saintclairhospitalback.repository.PatientRepository;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,12 +22,17 @@ public class ServicePatient implements IServicePatient{
 
     @Override
     public DTOPatient savePatientRegister(DTOMedicalSpecialty dtoMedicalSpecialty) {
-        List<DTOMedicalSpecialty> Entity_toDTO;
+       // List<DTOMedicalSpecialty> Entity_toDTO;
 
         return convertPatientEntitytoDTO(patientrepository.save(
                 convertDTOtoPatientEntity(dtoMedicalSpecialty.getPatients().get(0), dtoMedicalSpecialty)));
 
 
+    }
+
+    @Override
+    public void deletePatient(Integer id){
+        patientrepository.deleteById(id);
     }
     private Patient convertDTOtoPatientEntity(DTOPatient DTOpatient, DTOMedicalSpecialty dtoMedicalSpecialty) {
         Patient aux_patient = new Patient();

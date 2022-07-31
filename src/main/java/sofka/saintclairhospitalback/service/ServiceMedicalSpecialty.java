@@ -35,15 +35,20 @@ public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
         medicalspecialtyrepository.deleteById(id);
     }
 
-
+@Override
     public DTOMedicalSpecialty saveSpecialtyRegister(DTOMedicalSpecialty specialty) {
 
        return convertMedicalEntitytoDTOsingle(medicalspecialtyrepository.save(convertDTOtoEntity(specialty)));
 
     }
+@Override
+    public DTOMedicalSpecialty updateSpecialty(DTOMedicalSpecialty specialty) {
 
+        return convertMedicalEntitytoDTOsingle(medicalspecialtyrepository.save(convertDTOtoEntity(specialty)));
 
-    public MedicalSpecialty convertDTOtoEntity(DTOMedicalSpecialty specialty){
+    }
+
+    private MedicalSpecialty convertDTOtoEntity(DTOMedicalSpecialty specialty){
 
         MedicalSpecialty auxdtospeciualty = new MedicalSpecialty();
         auxdtospeciualty.setId(specialty.getId());

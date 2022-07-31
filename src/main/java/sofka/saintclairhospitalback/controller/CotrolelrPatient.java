@@ -1,6 +1,8 @@
 package sofka.saintclairhospitalback.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,16 +23,27 @@ public class CotrolelrPatient {
     @Autowired
     private ServicePatient servicepatient;
     @PostMapping("registerpatient")
-    public DTOPatient registerpatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient){
-        return servicepatient.savePatientRegister(dtomedicalpatient);
+    public ResponseEntity registerpatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient){
+
+        if (dtomedicalpatient.getPatients().get(0).getName().length() >= 10 &&
+                dtomedicalpatient.getPatients().get(0).getName().length() <=45){
+            return ResponseEntity.status(HttpStatus.OK).body(servicepatient.savePatientRegister(dtomedicalpatient));
+        }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
     }
     @DeleteMapping("deletepatient/{id}")
     public void deletepatient(@PathVariable Integer id){
         servicepatient.deletePatient(id);
     }
     @PutMapping("adddatepatient")
-    public DTOPatient adddatepatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient){
-        return servicepatient.savePatientdate(dtomedicalpatient);
+    public ResponseEntity adddatepatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient){
+        if (dtomedicalpatient.getPatients().get(0).getName().length() >= 10 &&
+                dtomedicalpatient.getPatients().get(0).getName().length() <=45){
+            return ResponseEntity.status(HttpStatus.OK).body(servicepatient.savePatientdate(dtomedicalpatient));
+        }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
     }
 
 }

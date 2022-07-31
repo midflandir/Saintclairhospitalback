@@ -2,22 +2,19 @@ package sofka.saintclairhospitalback.service;
 
 import org.springframework.stereotype.Service;
 import sofka.saintclairhospitalback.dto.DTOMedicalSpecialty;
-import sofka.saintclairhospitalback.dto.DTOPatient;
 import sofka.saintclairhospitalback.model.MedicalSpecialty;
-import sofka.saintclairhospitalback.model.Patient;
 import sofka.saintclairhospitalback.repository.MedicalSpecialtyRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
-
+public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty {
+    private final DTOEnttityConverters dtoEnttityConverters;
     private final MedicalSpecialtyRepository medicalspecialtyrepository;
 
-    public ServiceMedicalSpecialty(MedicalSpecialtyRepository medicalspecialtyrepository) {
+    public ServiceMedicalSpecialty(DTOEnttityConverters dtoEnttityConverters, MedicalSpecialtyRepository medicalspecialtyrepository) {
+        this.dtoEnttityConverters = dtoEnttityConverters;
         this.medicalspecialtyrepository = medicalspecialtyrepository;
     }
 
@@ -25,30 +22,31 @@ public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
     public List<DTOMedicalSpecialty> findAllMedicalSpecialty() {
         List<DTOMedicalSpecialty> Entity_toDTO;
 
-        Entity_toDTO = convertMedicalEntitytoDTO(medicalspecialtyrepository.findAll());
+        Entity_toDTO = dtoEnttityConverters.convertMedicalEntitytoDTO(medicalspecialtyrepository.findAll());
 
         return Entity_toDTO;
     }
 
     @Override
-    public void deleteSpecialty(Integer id){
+    public void deleteSpecialty(Integer id) {
         medicalspecialtyrepository.deleteById(id);
     }
 
-@Override
+    @Override
     public DTOMedicalSpecialty saveSpecialtyRegister(DTOMedicalSpecialty specialty) {
 
-       return convertMedicalEntitytoDTOsingle(medicalspecialtyrepository.save(convertDTOtoEntity(specialty)));
+        return dtoEnttityConverters.convertMedicalEntitytoDTOsingle(medicalspecialtyrepository.save(dtoEnttityConverters.convertDTOtoEntity(specialty)));
 
     }
-@Override
+
+    @Override
     public DTOMedicalSpecialty updateSpecialty(DTOMedicalSpecialty specialty) {
 
-        return convertMedicalEntitytoDTOsingle(medicalspecialtyrepository.save(convertDTOtoEntity(specialty)));
+        return dtoEnttityConverters.convertMedicalEntitytoDTOsingle(medicalspecialtyrepository.save(dtoEnttityConverters.convertDTOtoEntity(specialty)));
 
     }
-
-    private MedicalSpecialty convertDTOtoEntity(DTOMedicalSpecialty specialty){
+/*
+    private MedicalSpecialty convertDTOtoEntity(DTOMedicalSpecialty specialty) {
 
         MedicalSpecialty auxdtospeciualty = new MedicalSpecialty();
         auxdtospeciualty.setId(specialty.getId());
@@ -59,20 +57,20 @@ public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
         return auxdtospeciualty;
     }
 
-    private DTOMedicalSpecialty convertMedicalEntitytoDTOsingle(MedicalSpecialty medicalspecialty){
+    private DTOMedicalSpecialty convertMedicalEntitytoDTOsingle(MedicalSpecialty medicalspecialty) {
 
-            DTOMedicalSpecialty auxdtospeciualty = new DTOMedicalSpecialty();
-            auxdtospeciualty.setId(medicalspecialty.getId());
-            auxdtospeciualty.setPhysicianInCharge(medicalspecialty.getPhysicianInCharge());
-            auxdtospeciualty.setName(medicalspecialty.getName());
-            auxdtospeciualty.setPatients(convertPatientEntitytoDTO(medicalspecialty.getPatients()));
+        DTOMedicalSpecialty auxdtospeciualty = new DTOMedicalSpecialty();
+        auxdtospeciualty.setId(medicalspecialty.getId());
+        auxdtospeciualty.setPhysicianInCharge(medicalspecialty.getPhysicianInCharge());
+        auxdtospeciualty.setName(medicalspecialty.getName());
+        auxdtospeciualty.setPatients(convertPatientEntitytoDTO(medicalspecialty.getPatients()));
 
         return auxdtospeciualty;
     }
 
-    private List<Patient> convertDTOtoPatientEntity(List<DTOPatient> DTOpatientlist){
+    private List<Patient> convertDTOtoPatientEntity(List<DTOPatient> DTOpatientlist) {
         List<Patient> patient_list = new ArrayList<>();
-        for (int i = 0; i< DTOpatientlist.size(); i++){
+        for (int i = 0; i < DTOpatientlist.size(); i++) {
 
             Patient aux_dto_patient = new Patient();
 
@@ -80,7 +78,7 @@ public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
             aux_dto_patient.setName(DTOpatientlist.get(i).getName());
             aux_dto_patient.setAge(DTOpatientlist.get(i).getAge());
             aux_dto_patient.setIdentificationNumber(DTOpatientlist.get(i).getIdentificationNumber());
-            aux_dto_patient.setDate( String.join(", ", DTOpatientlist.get(i).getDate()));
+            aux_dto_patient.setDate(String.join(", ", DTOpatientlist.get(i).getDate()));
             aux_dto_patient.setNumberOfApointments(DTOpatientlist.get(i).getNumberOfApointments());
             patient_list.add(aux_dto_patient);
         }
@@ -88,9 +86,9 @@ public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
         return patient_list;
     }
 
-    private List<DTOMedicalSpecialty> convertMedicalEntitytoDTO(List<MedicalSpecialty> medicalspecialtylist){
+    private List<DTOMedicalSpecialty> convertMedicalEntitytoDTO(List<MedicalSpecialty> medicalspecialtylist) {
         List<DTOMedicalSpecialty> EntitytoDTO = new ArrayList<>();
-        for (int i = 0; i< medicalspecialtylist.size(); i++){
+        for (int i = 0; i < medicalspecialtylist.size(); i++) {
             DTOMedicalSpecialty auxdtospeciualty = new DTOMedicalSpecialty();
             auxdtospeciualty.setId(medicalspecialtylist.get(i).getId());
             auxdtospeciualty.setPhysicianInCharge(medicalspecialtylist.get(i).getPhysicianInCharge());
@@ -102,9 +100,9 @@ public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
         return EntitytoDTO;
     }
 
-    private List<DTOPatient> convertPatientEntitytoDTO(List<Patient> patientlist){
+    private List<DTOPatient> convertPatientEntitytoDTO(List<Patient> patientlist) {
         List<DTOPatient> DTOpatientlist = new ArrayList<>();
-        for (int i = 0; i< patientlist.size(); i++){
+        for (int i = 0; i < patientlist.size(); i++) {
 
             DTOPatient auxdtopatient = new DTOPatient();
 
@@ -122,8 +120,5 @@ public class ServiceMedicalSpecialty implements IServiceMedicalSpecialty{
 
         return DTOpatientlist;
     }
-
-
-
-
+*/
 }

@@ -22,27 +22,32 @@ public class CotrolelrPatient {
 
     @Autowired
     private ServicePatient servicepatient;
+
     @PostMapping("registerpatient")
-    public ResponseEntity registerpatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient){
+    public ResponseEntity registerpatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient) {
 
         if (dtomedicalpatient.getPatients().get(0).getName().length() >= 10 &&
-                dtomedicalpatient.getPatients().get(0).getName().length() <=45){
+                dtomedicalpatient.getPatients().get(0).getName().length() <= 45 &&
+                dtomedicalpatient.getPatients().get(0).getAge() > 0
+        ) {
             return ResponseEntity.status(HttpStatus.OK).body(servicepatient.savePatientRegister(dtomedicalpatient));
         }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 
     }
+
     @DeleteMapping("deletepatient/{id}")
-    public void deletepatient(@PathVariable Integer id){
+    public void deletepatient(@PathVariable Integer id) {
         servicepatient.deletePatient(id);
     }
+
     @PutMapping("adddatepatient")
-    public ResponseEntity adddatepatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient){
+    public ResponseEntity adddatepatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient) {
         if (dtomedicalpatient.getPatients().get(0).getName().length() >= 10 &&
-                dtomedicalpatient.getPatients().get(0).getName().length() <=45){
+                dtomedicalpatient.getPatients().get(0).getName().length() <= 45) {
             return ResponseEntity.status(HttpStatus.OK).body(servicepatient.savePatientdate(dtomedicalpatient));
         }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 
     }
 

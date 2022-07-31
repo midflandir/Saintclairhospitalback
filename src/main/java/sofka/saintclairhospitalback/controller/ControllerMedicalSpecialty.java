@@ -14,43 +14,43 @@ import java.util.List;
 @CrossOrigin("*")
 public class ControllerMedicalSpecialty {
 
-@Autowired
+    @Autowired
     private ServiceMedicalSpecialty serviceMedicalSpecialty;
 
     @GetMapping("allmedicalspecialty")
-    public List<DTOMedicalSpecialty> findallMedicalSpecialty(){
+    public List<DTOMedicalSpecialty> findallMedicalSpecialty() {
         return serviceMedicalSpecialty.findAllMedicalSpecialty();
     }
 
     @PostMapping("registerspecialty")
-    public ResponseEntity registerspecialty(@RequestBody DTOMedicalSpecialty medicalspecialty){
-            if (medicalspecialty.getName().length() >= 5 && medicalspecialty.getPhysicianInCharge().length() <=100 &&
-            medicalspecialty.getPhysicianInCharge().length() >= 10 && medicalspecialty.getPhysicianInCharge().length() <=45
-            ){
-                serviceMedicalSpecialty.saveSpecialtyRegister(medicalspecialty);
-                        return ResponseEntity.status(HttpStatus.OK).body(serviceMedicalSpecialty.saveSpecialtyRegister(medicalspecialty));
-            }
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    public ResponseEntity registerspecialty(@RequestBody DTOMedicalSpecialty medicalspecialty) {
+        if (medicalspecialty.getName().length() >= 5 && medicalspecialty.getPhysicianInCharge().length() <= 100 &&
+                medicalspecialty.getPhysicianInCharge().length() >= 10 && medicalspecialty.getPhysicianInCharge().length() <= 45
+        ) {
+
+            return ResponseEntity.status(HttpStatus.OK).body(serviceMedicalSpecialty.saveSpecialtyRegister(medicalspecialty));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 
     }
 
     @PutMapping("updatespecialty")
-    public ResponseEntity updatespecialty(@RequestBody DTOMedicalSpecialty medicalspecialty){
+    public ResponseEntity updatespecialty(@RequestBody DTOMedicalSpecialty medicalspecialty) {
 
-        if (medicalspecialty.getName().length() >= 5 && medicalspecialty.getPhysicianInCharge().length() <=100 &&
-                medicalspecialty.getPhysicianInCharge().length() >= 10 && medicalspecialty.getPhysicianInCharge().length() <=45
-        ){
+        if (medicalspecialty.getName().length() >= 5 && medicalspecialty.getPhysicianInCharge().length() <= 100 &&
+                medicalspecialty.getPhysicianInCharge().length() >= 10 && medicalspecialty.getPhysicianInCharge().length() <= 45
+        ) {
             return ResponseEntity.status(HttpStatus.OK).body(serviceMedicalSpecialty.updateSpecialty(medicalspecialty));
         }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 
 
     }
 
 
     @DeleteMapping("deletespecialty/{id}")
-    public void deletespecialty(@PathVariable Integer id){
-         serviceMedicalSpecialty.deleteSpecialty(id);
+    public void deletespecialty(@PathVariable Integer id) {
+        serviceMedicalSpecialty.deleteSpecialty(id);
     }
 
 }

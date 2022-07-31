@@ -1,13 +1,10 @@
 package sofka.saintclairhospitalback.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +16,8 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Data
 @Table(name = "patient",
-        uniqueConstraints = { @UniqueConstraint(name = "Uniquepatientinmedicalspecialty",
-                columnNames = { "fk_medical_specialty", "identification_number" }) })
+        uniqueConstraints = {@UniqueConstraint(name = "Uniquepatientinmedicalspecialty",
+                columnNames = {"fk_medical_specialty", "identification_number"})})
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +26,6 @@ public class Patient {
 
     @ManyToOne
     @JoinColumn(name = "fk_medical_specialty")
-   // @JsonBackReference
     private MedicalSpecialty fkMedicalSpecialty;
 
     @Column(name = "name", length = 45)

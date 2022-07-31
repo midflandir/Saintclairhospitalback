@@ -1,9 +1,10 @@
 package sofka.saintclairhospitalback.dto;
 
 import lombok.Data;
-import sofka.saintclairhospitalback.model.MedicalSpecialty;
+
 
 import java.util.List;
+
 @Data
 public class DTOPatient {
     private Integer id;

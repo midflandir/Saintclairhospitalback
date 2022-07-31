@@ -10,7 +10,7 @@ The application.properties has all the setting to run the aplication and automat
 
 **spring.datasource.password = yourpassword**
 
-
+If you get an allowPublicKeyRetrival ERROR, please open fit the database with MySQL Workbench the try again
 # Required
 This repository is set to work with the next front end app [here](https://github.com/midflandir/saintclairfront).
 

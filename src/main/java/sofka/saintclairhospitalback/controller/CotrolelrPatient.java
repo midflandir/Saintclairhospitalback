@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +21,16 @@ public class CotrolelrPatient {
     @Autowired
     private ServicePatient servicepatient;
     @PostMapping("registerpatient")
-    public DTOPatient registerpatient(@RequestBody DTOMedicalSpecialty dtomedical){
-        return servicepatient.savePatientRegister(dtomedical);
+    public DTOPatient registerpatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient){
+        return servicepatient.savePatientRegister(dtomedicalpatient);
     }
     @DeleteMapping("deletepatient/{id}")
     public void deletepatient(@PathVariable Integer id){
         servicepatient.deletePatient(id);
     }
+    @PutMapping("adddatepatient")
+    public DTOPatient adddatepatient(@RequestBody DTOMedicalSpecialty dtomedicalpatient){
+        return servicepatient.savePatientdate(dtomedicalpatient);
+    }
+
 }

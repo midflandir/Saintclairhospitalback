@@ -7,5 +7,7 @@ public interface IServicePatient {
 
     DTOPatient savePatientRegister(DTOMedicalSpecialty dtoMedicalSpecialty);
 
+    DTOPatient savePatientdate(DTOMedicalSpecialty dtoMedicalSpecialty);
+
     void deletePatient(Integer id);
 }

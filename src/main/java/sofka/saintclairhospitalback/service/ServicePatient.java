@@ -7,7 +7,10 @@ import sofka.saintclairhospitalback.model.MedicalSpecialty;
 import sofka.saintclairhospitalback.model.Patient;
 import sofka.saintclairhospitalback.repository.PatientRepository;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,13 +26,37 @@ public class ServicePatient implements IServicePatient{
     @Override
     public DTOPatient savePatientRegister(DTOMedicalSpecialty dtoMedicalSpecialty) {
        // List<DTOMedicalSpecialty> Entity_toDTO;
-
+        dtoMedicalSpecialty = adddate(dtoMedicalSpecialty);
         return convertPatientEntitytoDTO(patientrepository.save(
                 convertDTOtoPatientEntity(dtoMedicalSpecialty.getPatients().get(0), dtoMedicalSpecialty)));
 
 
     }
 
+    private DTOMedicalSpecialty adddate(DTOMedicalSpecialty dtoMedicalSpecialty) {
+        List<String> dates;
+        dates = dtoMedicalSpecialty.getPatients().get(0).getDate();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        System.out.println(formatter.format(date));
+        dates.add(formatter.format(date));
+        dtoMedicalSpecialty.getPatients().get(0).setDate(dates);
+        return dtoMedicalSpecialty;
+    }
+
+    @Override
+    public DTOPatient savePatientdate(DTOMedicalSpecialty dtoMedicalSpecialty) {
+        // List<DTOMedicalSpecialty> Entity_toDTO;
+        dtoMedicalSpecialty = adddate(dtoMedicalSpecialty);
+
+        Integer numberappoinments = dtoMedicalSpecialty.getPatients().get(0).getNumberOfApointments() + 1;
+        dtoMedicalSpecialty.getPatients().get(0).setNumberOfApointments(numberappoinments);
+
+        return convertPatientEntitytoDTO(patientrepository.save(
+                convertDTOtoPatientEntity(dtoMedicalSpecialty.getPatients().get(0), dtoMedicalSpecialty)));
+
+
+    }
     @Override
     public void deletePatient(Integer id){
         patientrepository.deleteById(id);
